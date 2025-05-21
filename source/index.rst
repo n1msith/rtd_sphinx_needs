@@ -6,46 +6,18 @@
 Sphinx-needs docs
 =================
 
+Example of a Test Plan written using ``sphinx-needs``
+
 Add your content using ``reStructuredText`` syntax. See the
 `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
 documentation for details.
 
-A basic example of rst.
-Text written on the next line in rst is rendered as part of the same line above.
+Build using ``sphinx-autobuild source build/html``
 
-Text with a line space above it as rendered as a new paragraph. So in essence there is no way to enforce a new line on demand.
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+   :hidden:
 
-Here is a list:
+   requirements
 
-* a list item
-* some more
-
-.. req:: Basic need example
-    :id: basic_example1
-    :tags: test
-    :collapse: true
-
-    A basic example of rst inside a need.
-    Text written on the next line in rst is rendered as part of the same line above.
-
-    Text with a line space above it as rendered as a new paragraph. So in essence there is no way to enforce a new line on demand.
-
-    Here is a list:
-
-    * a list item
-    * some more
-
-
-.. req:: Example Requirement
-   :id: EX_REQ_001
-   :tags: test
-   :status: open
-
-   A simple requirement used as example.
-   The content supports all kind of Sphinx features, like:
-
-   **Bold** or *italic* text
-
-   Web links, like this `google <https://google.com>`__ link.
-
-   Or even images:    
