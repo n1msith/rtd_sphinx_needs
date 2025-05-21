@@ -1,0 +1,24 @@
+/* _static/custom.css - Adding back essential paragraph spacing */
+
+/* Fix paragraph spacing in needs */
+.need .need_content > p {
+    margin-bottom: 1em !important;
+}
+
+/* More specific RTD theme paragraph spacing */
+.rst-content .need > p,
+.rst-content .need .need_content > p {
+    margin-bottom: 12px !important;
+}
+
+/* Fix list spacing in needs */
+.rst-content .need li,
+.need .need_content li {
+    margin-bottom: 0 !important;
+}
+
+/* Proper list container spacing */
+.rst-content .need ul,
+.need .need_content ul {
+    margin-bottom: 12px !important;
+}
