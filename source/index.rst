@@ -20,4 +20,5 @@ Build using ``sphinx-autobuild source build/html``
    :hidden:
 
    requirements
+   test_cases
 

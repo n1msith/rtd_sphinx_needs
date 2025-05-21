@@ -36,7 +36,17 @@ needs_layouts = {
         'grid': 'simple',
         'layout': {
             'head': ['<<meta("type_name")>>: **<<meta("title")>>** <<meta_id()>> <<collapse_button("meta", collapsed="icon:arrow-down-circle", visible="icon:arrow-right-circle", initial=True)>>'],
-            'meta': ['**Status:** <<meta("status")>>', '**Tags:** <<meta("tags")>>']
+            'meta': ['**Status:** <<meta("status")>>', '**Tags:** <<meta("tags")>>', '**Covers:** <<meta_links("covers", incoming=False)>>', '**Covered by:** <<meta_links("covers", incoming=True)>>']
         }
     }
 }
+
+needs_extra_links = [
+    {
+        "option": "covers",
+        "incoming": "covered by",
+        "outgoing": "covers",
+        "copy": True,
+        "allow_dead_links": True,
+    }
+]
