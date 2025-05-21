@@ -1,0 +1,16 @@
+# Sphinx build directory
+build/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+.env/
