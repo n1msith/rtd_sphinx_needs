@@ -3,5 +3,6 @@ Requirements Coverage
 =====================
 
 .. needtable::
-   :filter: type=="req"
-   :columns: id;title;tags;covered by;validates;validated by
+   :columns: id, title, covered by, validates as "Validated by"
+   :colwidths: 20,20,20,20
+   :filter: type == "req"

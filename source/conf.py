@@ -73,7 +73,7 @@ needs_types = [
 
 needs_layouts = {
 
-    'req': {  # Override the default layout
+    'req': {
         'grid': 'simple',
         'layout': {
             'head': ['<<meta("type_name")>>: **<<meta("title")>>** <<meta_id()>> <<collapse_button("meta", collapsed="icon:arrow-down-circle", visible="icon:arrow-right-circle", initial=True)>>'],
@@ -81,7 +81,7 @@ needs_layouts = {
                     ]
         }
     },    
-    'test': {  # Override the default layout
+    'test': {
         'grid': 'simple',
         'layout': {
             'head': ['<<meta("type_name")>>: **<<meta("title")>>** <<meta_id()>> <<collapse_button("meta", collapsed="icon:arrow-down-circle", visible="icon:arrow-right-circle", initial=True)>>'],
@@ -89,7 +89,7 @@ needs_layouts = {
                     ]
         }
     },
-    'result': {  # Override the default layout
+    'result': {
         'grid': 'simple',
         'layout': {
             'head': ['<<meta("type_name")>>: **<<meta("title")>>** <<meta_id()>> <<collapse_button("meta", collapsed="icon:arrow-down-circle", visible="icon:arrow-right-circle", initial=True)>>'],
@@ -105,13 +105,42 @@ needs_extra_links = [
         "incoming": "covered by",
         "outgoing": "covers",
         "copy": True,
-        #"allow_dead_links": True,
+        "allow_dead_links": True,
     },
     {
         "option": "validates",      # The option name used in RST files
         "incoming": "validated by", # What it's called in the incoming direction
         "outgoing": "validates",    # What it's called in the outgoing direction
         "copy": True,               # Auto-create the reverse link
-        #"allow_dead_links": True,
+        "allow_dead_links": True,
     },    
 ]
+
+
+def find_test_result_ids(app, need, needs, *args, **kwargs):
+    """
+    Find test result IDs and store them as proper links
+    """
+    if need['type'] != 'req':
+        return ""
+    
+    test_results = []
+    
+    # Find test cases that cover this requirement
+    for need_id, other_need in needs.items():
+        if other_need['type'] == 'test' and need['id'] in other_need.get('covers', []):
+            # Find test results that validate this test case
+            for result_id, result_need in needs.items():
+                if (result_need['type'] == 'test_result' and 
+                    need_id in result_need.get('validates', [])):
+                    test_results.append(result_id)
+    
+    # Store the IDs in the actual validates field so sphinx-needs treats them as links
+    if test_results:
+        need['validates'] = test_results  # This creates actual links
+    
+    return ";".join(test_results)  # Still return for display
+
+# Add to configuration
+needs_functions = [find_test_result_ids]
+needs_extra_options = ['test_result_ids']
