@@ -6,25 +6,73 @@ Tx Results
     :id: result_tx_power_1
     :tags: tx
     :validates: test_tx_power_1
+    :result_file: somefile.csv
+    :margin: [calculated from the results file somehow using a custom fucntion]
 
     The transmitter should have an output power of 23dBm over all frequencies.
 
     .. plotly::
     
         import plotly.graph_objects as go
+        import numpy as np
         
         # Static test data
         freq = [2.4, 2.41, 2.42, 2.43, 2.44, 2.45, 2.46, 2.47, 2.48, 2.49, 2.5]
         gain = [14.2, 14.5, 14.8, 15.1, 15.0, 14.9, 15.2, 15.1, 14.7, 14.6, 14.3]
         
+        # Spec limits
+        spec_min = [14.0] * len(freq)
+        spec_max = [16.0] * len(freq)
+        
+        # Calculate margins
+        gain_array = np.array(gain)
+        spec_min_array = np.array(spec_min)
+        spec_max_array = np.array(spec_max)
+        
+        margin_to_min = gain_array - spec_min_array
+        margin_to_max = spec_max_array - gain_array
+        overall_margin = np.minimum(margin_to_min, margin_to_max)
+        
+        # Find minimum margin and its frequency
+        min_margin_idx = np.argmin(overall_margin)
+        min_margin_value = overall_margin[min_margin_idx]
+        min_margin_freq = freq[min_margin_idx]
+        
         fig = go.Figure()
         
+        # Add measured data
         fig.add_trace(go.Scatter(x=freq, y=gain, 
                                 name='Measured Gain', 
                                 line=dict(color='blue')))
         
+        # Add spec limits
+        fig.add_trace(go.Scatter(x=freq, y=spec_min, 
+                                name='Min Spec (14 dB)', 
+                                line=dict(color='red', dash='dash')))
+        
+        fig.add_trace(go.Scatter(x=freq, y=spec_max, 
+                                name='Max Spec (16 dB)', 
+                                line=dict(color='red', dash='dash')))
+        
+        # Highlight critical point
+        fig.add_trace(go.Scatter(x=[min_margin_freq], y=[gain[min_margin_idx]], 
+                                mode='markers', 
+                                marker=dict(color='orange', size=10),
+                                name='Critical Point'))
+        
+        # Add analysis annotation
+        fig.add_annotation(
+            x=0.02, y=0.98, xref="paper", yref="paper",
+            text=f"<b>Analysis:</b><br>"
+                 f"Min Margin: {min_margin_value:.1f} dB<br>"
+                 f"At Frequency: {min_margin_freq:.2f} GHz",
+            showarrow=False, align="left",
+            bgcolor="rgba(255,255,255,0.9)",
+            bordercolor="black", borderwidth=1
+        )
+        
         fig.update_layout(
-            title="TX Gain vs Frequency",
+            title="TX Gain vs Frequency with Margin Analysis",
             xaxis_title="Frequency (GHz)",
             yaxis_title="Gain (dB)"
         )
