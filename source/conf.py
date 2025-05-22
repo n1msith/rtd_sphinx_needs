@@ -36,7 +36,8 @@ needs_layouts = {
         'grid': 'simple',
         'layout': {
             'head': ['<<meta("type_name")>>: **<<meta("title")>>** <<meta_id()>> <<collapse_button("meta", collapsed="icon:arrow-down-circle", visible="icon:arrow-right-circle", initial=True)>>'],
-            'meta': ['**Status:** <<meta("status")>>', '**Tags:** <<meta("tags")>>', '**Covers:** <<meta_links("covers", incoming=False)>>', '**Covered by:** <<meta_links("covers", incoming=True)>>']
+            'meta': ['**Status:** <<meta("status")>>', '**Tags:** <<meta("tags")>>', '**Covers:** <<meta_links("covers", incoming=False)>>', '**Covered by:** <<meta_links("covers", incoming=True)>>',
+                    '**Validates:** <<meta_links("validates", incoming=False)>>', '**Validated by:** <<meta_links("validates", incoming=True)>>']
         }
     }
 }
@@ -48,5 +49,53 @@ needs_extra_links = [
         "outgoing": "covers",
         "copy": True,
         "allow_dead_links": True,
+    },
+    {
+        "option": "validates",      # The option name used in RST files
+        "incoming": "validated by", # What it's called in the incoming direction
+        "outgoing": "validates",    # What it's called in the outgoing direction
+        "copy": True,               # Auto-create the reverse link
+    },    
+]
+
+# In your conf.py file
+
+needs_types = [
+    # Default sphinx-needs types
+    {
+        "directive": "req",
+        "title": "Requirement",
+        "prefix": "REQ_",
+        "color": "#BFD8D2",
+        "style": "node",
+    },
+    {
+        "directive": "spec",
+        "title": "Specification",
+        "prefix": "SPEC_",
+        "color": "#FEDCD2",
+        "style": "node",
+    },
+    {
+        "directive": "impl",
+        "title": "Implementation",
+        "prefix": "IMPL_",
+        "color": "#DF744A",
+        "style": "node",
+    },
+    {
+        "directive": "test",
+        "title": "Test Case",
+        "prefix": "TEST_",
+        "color": "#DCB239",
+        "style": "node",
+    },
+    # Your new type
+    {
+        "directive": "test_result",
+        "title": "Test Result",
+        "prefix": "RESULT_",
+        "color": "#4CAF50",  # Green for test results
+        "style": "node",
     }
 ]

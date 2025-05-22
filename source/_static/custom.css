@@ -22,3 +22,23 @@
 .need .need_content ul {
     margin-bottom: 12px !important;
 }
+
+
+
+/* Fix for RTD theme table responsiveness issues */
+.wy-table-responsive {
+    overflow: visible !important;
+    max-width: 100% !important;
+}
+
+/* Prevent horizontal scrolling in tables */
+.wy-table-responsive table {
+    width: 100% !important;
+    table-layout: fixed !important;
+}
+
+/* Fix column widths in needs tables */
+.need {
+    width: 100% !important;
+    table-layout: fixed !important;
+}

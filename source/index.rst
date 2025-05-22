@@ -21,4 +21,6 @@ Build using ``sphinx-autobuild source build/html``
 
    requirements
    test_cases
+   requirements_coverage
+   test_results/tx_results
 

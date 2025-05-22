@@ -3,7 +3,7 @@ Tx Path
 =======
 
 .. test:: Tx power
-    :id: test_tx_gain_1
+    :id: test_tx_power_1
     :tags: tx
     :covers: req_tx_power_1
 
