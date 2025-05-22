@@ -31,34 +31,6 @@ html_css_files = ['custom.css']
 # -- Needs config------------ -------------------------------------------------
 #needs_table_classes = ['no-sphinx-rtd-theme-table-styling']
 
-needs_layouts = {
-    'clean': {  # Override the default layout
-        'grid': 'simple',
-        'layout': {
-            'head': ['<<meta("type_name")>>: **<<meta("title")>>** <<meta_id()>> <<collapse_button("meta", collapsed="icon:arrow-down-circle", visible="icon:arrow-right-circle", initial=True)>>'],
-            'meta': ['**Status:** <<meta("status")>>', '**Tags:** <<meta("tags")>>', '**Covers:** <<meta_links("covers", incoming=False)>>', '**Covered by:** <<meta_links("covers", incoming=True)>>',
-                    '**Validates:** <<meta_links("validates", incoming=False)>>', '**Validated by:** <<meta_links("validates", incoming=True)>>']
-        }
-    }
-}
-
-needs_extra_links = [
-    {
-        "option": "covers",
-        "incoming": "covered by",
-        "outgoing": "covers",
-        "copy": True,
-        "allow_dead_links": True,
-    },
-    {
-        "option": "validates",      # The option name used in RST files
-        "incoming": "validated by", # What it's called in the incoming direction
-        "outgoing": "validates",    # What it's called in the outgoing direction
-        "copy": True,               # Auto-create the reverse link
-    },    
-]
-
-# In your conf.py file
 
 needs_types = [
     # Default sphinx-needs types
@@ -90,12 +62,56 @@ needs_types = [
         "color": "#DCB239",
         "style": "node",
     },
-    # Your new type
     {
         "directive": "test_result",
         "title": "Test Result",
         "prefix": "RESULT_",
-        "color": "#4CAF50",  # Green for test results
+        "color": "#4CAF50",
         "style": "node",
     }
+]
+
+needs_layouts = {
+
+    'req': {  # Override the default layout
+        'grid': 'simple',
+        'layout': {
+            'head': ['<<meta("type_name")>>: **<<meta("title")>>** <<meta_id()>> <<collapse_button("meta", collapsed="icon:arrow-down-circle", visible="icon:arrow-right-circle", initial=True)>>'],
+            'meta': ['**Status:** <<meta("status")>>', '**Tags:** <<meta("tags")>>', '**Covered by:** <<meta_links("covers", incoming=True)>>',
+                    ]
+        }
+    },    
+    'test': {  # Override the default layout
+        'grid': 'simple',
+        'layout': {
+            'head': ['<<meta("type_name")>>: **<<meta("title")>>** <<meta_id()>> <<collapse_button("meta", collapsed="icon:arrow-down-circle", visible="icon:arrow-right-circle", initial=True)>>'],
+            'meta': ['**Status:** <<meta("status")>>', '**Tags:** <<meta("tags")>>', '**Covers:** <<meta_links("covers", incoming=False)>>', '**Validated by:** <<meta_links("validates", incoming=True)>>',
+                    ]
+        }
+    },
+    'result': {  # Override the default layout
+        'grid': 'simple',
+        'layout': {
+            'head': ['<<meta("type_name")>>: **<<meta("title")>>** <<meta_id()>> <<collapse_button("meta", collapsed="icon:arrow-down-circle", visible="icon:arrow-right-circle", initial=True)>>'],
+            'meta': ['**Status:** <<meta("status")>>', '**Tags:** <<meta("tags")>>',
+                    '**Validates:** <<meta_links("validates", incoming=False)>>']
+        }
+    }
+}
+
+needs_extra_links = [
+    {
+        "option": "covers",
+        "incoming": "covered by",
+        "outgoing": "covers",
+        "copy": True,
+        #"allow_dead_links": True,
+    },
+    {
+        "option": "validates",      # The option name used in RST files
+        "incoming": "validated by", # What it's called in the incoming direction
+        "outgoing": "validates",    # What it's called in the outgoing direction
+        "copy": True,               # Auto-create the reverse link
+        #"allow_dead_links": True,
+    },    
 ]

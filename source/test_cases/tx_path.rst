@@ -4,6 +4,7 @@ Tx Path
 
 .. test:: Tx power
     :id: test_tx_power_1
+    :layout: test
     :tags: tx
     :covers: req_tx_power_1
 
