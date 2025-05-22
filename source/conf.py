@@ -14,7 +14,7 @@ author = 'nick'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "sphinx_needs"
+    "sphinx_needs", "sphinx_plotly_directive"
 ]
 
 templates_path = ['_templates']
