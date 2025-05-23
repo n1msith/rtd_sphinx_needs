@@ -116,10 +116,12 @@ needs_extra_links = [
     },    
 ]
 
+# Add to your configuration
+needs_extra_options = ['validated_by_result']
 
 def find_test_result_ids(app, need, needs, *args, **kwargs):
     """
-    Find test result IDs and store them as proper links
+    Populate validated_by test result links for requirements
     """
     if need['type'] != 'req':
         return ""
@@ -134,13 +136,14 @@ def find_test_result_ids(app, need, needs, *args, **kwargs):
                 if (result_need['type'] == 'test_result' and 
                     need_id in result_need.get('validates', [])):
                     test_results.append(result_id)
+                    # Also add the reverse link
+                    if 'validates' not in needs[result_id]:
+                        needs[result_id]['validates'] = []
+                    if need['id'] not in needs[result_id]['validates']:
+                        needs[result_id]['validates'].append(need['id'])
     
-    # Store the IDs in the actual validates field so sphinx-needs treats them as links
-    if test_results:
-        need['validates'] = test_results  # This creates actual links
-    
-    return ";".join(test_results)  # Still return for display
+    return ""  # Don't return anything for display    
+
 
 # Add to configuration
 needs_functions = [find_test_result_ids]
-needs_extra_options = ['test_result_ids']
