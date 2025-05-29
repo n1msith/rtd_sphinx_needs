@@ -3,6 +3,13 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+import sys, os
+
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+plots_path = os.path.join(project_root, "processing", "plots")
+sys.path.append(plots_path)
+sys.path.append(os.path.dirname(__file__))  # <-- Add this line to make 'conf' importable
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
@@ -30,7 +37,6 @@ html_css_files = ['custom.css']
 
 # -- Needs config------------ -------------------------------------------------
 #needs_table_classes = ['no-sphinx-rtd-theme-table-styling']
-
 
 needs_types = [
     # Default sphinx-needs types
@@ -118,6 +124,9 @@ needs_extra_links = [
 
 # Add to your configuration
 needs_extra_options = ['validated_by_result']
+
+
+# -- Custom functions------------ -------------------------------------------------
 
 def find_test_result_ids(app, need, needs, *args, **kwargs):
     """
