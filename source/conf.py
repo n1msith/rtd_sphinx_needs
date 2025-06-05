@@ -100,7 +100,8 @@ needs_layouts = {
         'layout': {
             'head': ['<<meta("type_name")>>: **<<meta("title")>>** <<meta_id()>> <<collapse_button("meta", collapsed="icon:arrow-down-circle", visible="icon:arrow-right-circle", initial=True)>>'],
             'meta': ['**Status:** <<meta("status")>>', '**Tags:** <<meta("tags")>>',
-                    '**Validates:** <<meta_links("validates", incoming=False)>>']
+                    '**Validates:** <<meta_links("validates", incoming=False)>>',
+                    '**Margin:** <<meta("margin")>> dB']
         }
     }
 }
@@ -123,14 +124,15 @@ needs_extra_links = [
 ]
 
 # Add to your configuration
-needs_extra_options = ['validated_by_result']
+needs_extra_options = ['validated_by_result', 'margin']
 
 
 # -- Custom functions------------ -------------------------------------------------
 
 def find_test_result_ids(app, need, needs, *args, **kwargs):
     """
-    Populate validated_by test result links for requirements
+    This function finds all test results that validate a given requirement.
+    It allows a needtable to display requirements, test cases, and their associated test results.
     """
     if need['type'] != 'req':
         return ""
@@ -153,6 +155,8 @@ def find_test_result_ids(app, need, needs, *args, **kwargs):
     
     return ""  # Don't return anything for display    
 
+def calc_margin(app, need, needs, *args, **kwargs):
+    return 99
 
 # Add to configuration
-needs_functions = [find_test_result_ids]
+needs_functions = [find_test_result_ids, calc_margin]

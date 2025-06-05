@@ -1,0 +1,3 @@
+test_name,parameter,result,unit,spec_min,spec_max
+tx_power,gain,22,dB,21,23
+tx_power,frequency,700,MHz,21,23

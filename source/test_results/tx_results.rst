@@ -9,6 +9,7 @@ Tx Results
     :layout: result
     :tags: tx
     :validates: test_tx_power_1
+    :margin: [[calc_margin()]]
 
     The transmitter should have an output power of 23dBm over all frequencies.
 
